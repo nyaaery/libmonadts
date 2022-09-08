@@ -1,6 +1,5 @@
-export { Option, Some, None } from "./Option";
-export { Result, Ok, Err } from "./Result";
-
+# Result example
+```ts
 import { Result, Ok, Err } from "./Result";
 
 function div(x: number, y: number): Result<number, string> {
@@ -31,3 +30,4 @@ if (y2.Ok()) {
     // y2 :: Ok<number>
     console.log(y2.value);
 }
+```

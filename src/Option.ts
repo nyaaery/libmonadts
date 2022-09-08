@@ -1,8 +1,10 @@
-export type Some<T> = SomeImpl & {
+import { ConstructorReturnType } from "./util";
+
+export type Some<T> = ConstructorReturnType<typeof some_impl_constructor> & {
     value: T
 }
 
-export type None = NoneImpl;
+export type None = ConstructorReturnType<typeof none_impl_constructor>;
 
 export type Option<T> = Some<T> | None;
 
@@ -10,8 +12,9 @@ type OptionMatchBlock_<T, A> = { Some(value: T): A, None(): A };
 
 type OptionMatchBlock<T, A> = OptionMatchBlock_<T, A> | (Partial<OptionMatchBlock_<T, A>> & { _(): A });
 
-class OptionImpl {
-    match<T, A, X extends A | Promise<A>>(this: Option<T>, block: OptionMatchBlock<T, X>): X {
+type _Option<T> = Option<T>;
+const option_impl_constructor = class Option {
+    match<T, A, X extends A | Promise<A>>(this: _Option<T>, block: OptionMatchBlock<T, X>): X {
         if ("_" in block) {
             if (block.Some !== undefined && this.Some()) {
                 return block.Some(this.value);
@@ -29,7 +32,7 @@ class OptionImpl {
         }
     }
 
-    bind<T, A, X extends Option<A> | Promise<Option<A>>>(this: Option<T>, f: (value: T) => X): X | None {
+    bind<T, A, X extends _Option<A> | Promise<_Option<A>>>(this: _Option<T>, f: (value: T) => X): X | None {
         if (this.Some()) {
             return f(this.value);
         } else {
@@ -38,8 +41,9 @@ class OptionImpl {
     }
 }
 
-class SomeImpl extends OptionImpl {
-    Some<T>(this: Option<T>): this is Some<T> {
+type _Some<T> = Some<T>;
+const some_impl_constructor = class Some extends option_impl_constructor {
+    Some<T>(this: Option<T>): this is _Some<T> {
         return true;
     }
 
@@ -48,18 +52,19 @@ class SomeImpl extends OptionImpl {
     }
 }
 
-class NoneImpl extends OptionImpl {
+type _None = None;
+const none_impl_constructor = class None extends option_impl_constructor {
     Some<T>(this: Option<T>): this is Some<T> {
         return false;
     }
 
-    None<T>(this: Option<T>): this is None {
+    None<T>(this: Option<T>): this is _None {
         return true;
     }
 }
 
-const some_impl = new SomeImpl();
-const none_impl = new NoneImpl();
+const some_impl = new some_impl_constructor();
+const none_impl = new none_impl_constructor();
 
 export function Some<T>(value: T): Some<T> {
     const some = Object.create(some_impl);

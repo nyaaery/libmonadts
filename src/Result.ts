@@ -1,8 +1,10 @@
-export type Ok<T> = OkImpl & {
+import { ConstructorReturnType } from "./util";
+
+export type Ok<T> = ConstructorReturnType<typeof ok_impl_constructor> & {
     value: T
 }
 
-export type Err<E> = ErrImpl & {
+export type Err<E> = ConstructorReturnType<typeof err_impl_constructor> & {
     value: E
 }
 
@@ -12,8 +14,9 @@ type ResultMatchBlock_<T, E, A> = { Ok(value: T): A, Err(value: E): A };
 
 type ResultMatchBlock<T, E, A> = ResultMatchBlock_<T, E, A> | (Partial<ResultMatchBlock_<T, E, A>> & { _(): A });
 
-class ResultImpl {
-    match<T, E, A, X extends A | Promise<A>>(this: Result<T, E>, block: ResultMatchBlock<T, E, X>): X {
+type _Result<T, E> = Result<T, E>;
+const result_impl_constructor = class Result {
+    match<T, E, A, X extends A | Promise<A>>(this: _Result<T, E>, block: ResultMatchBlock<T, E, X>): X {
         if ("_" in block) {
             if (block.Ok !== undefined && this.Ok()) {
                 return block.Ok(this.value);
@@ -31,7 +34,7 @@ class ResultImpl {
         }
     }
 
-    bind<T, E, A, B, X extends Result<A, B> | Promise<Result<A, B>>>(this: Result<T, E>, f: (value: T) => X): X | Err<E> {
+    bind<T, E, A, B, X extends _Result<A, B> | Promise<_Result<A, B>>>(this: _Result<T, E>, f: (value: T) => X): X | Err<E> {
         if (this.Ok()) {
             return f(this.value);
         } else {
@@ -40,8 +43,9 @@ class ResultImpl {
     }
 }
 
-class OkImpl extends ResultImpl {
-    Ok<T, E>(this: Result<T, E>): this is Ok<T> {
+type _Ok<T> = Ok<T>;
+const ok_impl_constructor = class Ok extends result_impl_constructor {
+    Ok<T, E>(this: Result<T, E>): this is _Ok<T> {
         return true;
     }
 
@@ -50,18 +54,19 @@ class OkImpl extends ResultImpl {
     }
 }
 
-class ErrImpl extends ResultImpl {
+type _Err<T> = Err<T>;
+const err_impl_constructor = class Err extends result_impl_constructor {
     Ok<T, E>(this: Result<T, E>): this is Ok<T> {
         return false;
     }
 
-    Err<T, E>(this: Result<T, E>): this is Err<E> {
+    Err<T, E>(this: Result<T, E>): this is _Err<E> {
         return true;
     }
 }
 
-const ok_impl = new OkImpl();
-const err_impl = new ErrImpl();
+const ok_impl = new ok_impl_constructor();
+const err_impl = new err_impl_constructor();
 
 export function Ok<T>(value: T): Ok<T> {
     const ok = Object.create(ok_impl);
