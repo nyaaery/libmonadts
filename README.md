@@ -1,6 +1,6 @@
 # Result example
 ```ts
-import { Result, Ok, Err } from "./Result";
+import { Result, Ok, Err } from "libmonadts";
 
 function div(x: number, y: number): Result<number, string> {
     if (y == 0) {
@@ -20,6 +20,11 @@ x.match({
         console.log(err);
     }
 });
+```
+```
+division by 0
+```
+```ts
 
 const y = div(8, 2);
 
@@ -30,4 +35,7 @@ if (y2.Ok()) {
     // y2 :: Ok<number>
     console.log(y2.value);
 }
+```
+```
+2
 ```
