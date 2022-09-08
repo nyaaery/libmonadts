@@ -2,7 +2,7 @@
   "name": "libmonadts",
   "version": "1.0.0",
   "description": "",
-  "main": "./result/index.ts",
+  "main": "./result/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
