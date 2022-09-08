@@ -1,2 +1,10 @@
-export { Some, None } from "./Option";
-export { Result, Ok, Err } from "./Result";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Err = exports.Ok = exports.Result = exports.None = exports.Some = void 0;
+var Option_1 = require("./Option");
+Object.defineProperty(exports, "Some", { enumerable: true, get: function () { return Option_1.Some; } });
+Object.defineProperty(exports, "None", { enumerable: true, get: function () { return Option_1.None; } });
+var Result_1 = require("./Result");
+Object.defineProperty(exports, "Result", { enumerable: true, get: function () { return Result_1.Result; } });
+Object.defineProperty(exports, "Ok", { enumerable: true, get: function () { return Result_1.Ok; } });
+Object.defineProperty(exports, "Err", { enumerable: true, get: function () { return Result_1.Err; } });

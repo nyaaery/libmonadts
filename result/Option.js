@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.None = exports.Some = void 0;
 const option_impl_constructor = class Option {
     match(block) {
         if ("_" in block) {
@@ -47,9 +50,10 @@ const none_impl_constructor = class None extends option_impl_constructor {
 };
 const some_impl = new some_impl_constructor();
 const none_impl = new none_impl_constructor();
-export function Some(value) {
+function Some(value) {
     const some = Object.create(some_impl);
     some.value = value;
     return some;
 }
-export const None = Object.create(none_impl);
+exports.Some = Some;
+exports.None = Object.create(none_impl);

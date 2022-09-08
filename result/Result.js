@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Result = exports.Err = exports.Ok = void 0;
 const result_impl_constructor = class Result {
     match(block) {
         if ("_" in block) {
@@ -47,17 +50,19 @@ const err_impl_constructor = class Err extends result_impl_constructor {
 };
 const ok_impl = new ok_impl_constructor();
 const err_impl = new err_impl_constructor();
-export function Ok(value) {
+function Ok(value) {
     const ok = Object.create(ok_impl);
     ok.value = value;
     return ok;
 }
-export function Err(value) {
+exports.Ok = Ok;
+function Err(value) {
     const err = Object.create(err_impl);
     err.value = value;
     return err;
 }
-export function Result(f) {
+exports.Err = Err;
+function Result(f) {
     try {
         return Ok(f());
     }
@@ -65,3 +70,4 @@ export function Result(f) {
         return Err(err);
     }
 }
+exports.Result = Result;
