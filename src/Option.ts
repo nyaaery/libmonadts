@@ -1,10 +1,8 @@
-import { ConstructorReturnType } from "./util";
-
-export type Some<T> = ConstructorReturnType<typeof some_impl_constructor> & {
+export type Some<T> = InstanceType<typeof some_impl_constructor> & {
     value: T
 }
 
-export type None = ConstructorReturnType<typeof none_impl_constructor>;
+export type None = InstanceType<typeof none_impl_constructor>;
 
 export type Option<T> = Some<T> | None;
 
