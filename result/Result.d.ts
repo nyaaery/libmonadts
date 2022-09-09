@@ -1,8 +1,7 @@
-import { ConstructorReturnType } from "./util";
-export declare type Ok<T> = ConstructorReturnType<typeof ok_impl_constructor> & {
+export declare type Ok<T> = InstanceType<typeof ok_impl_constructor> & {
     value: T;
 };
-export declare type Err<E> = ConstructorReturnType<typeof err_impl_constructor> & {
+export declare type Err<E> = InstanceType<typeof err_impl_constructor> & {
     value: E;
 };
 export declare type Result<T, E> = Ok<T> | Err<E>;

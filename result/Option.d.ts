@@ -1,11 +1,10 @@
-import { ConstructorReturnType } from "./util";
-export declare type Some<T> = ConstructorReturnType<typeof some_impl_constructor> & {
+export declare type Some<T> = InstanceType<typeof some_impl_constructor> & {
     value: T;
 };
 declare enum NoneDistinctor {
     _ = 0
 }
-export declare type None = ConstructorReturnType<typeof none_impl_constructor> & NoneDistinctor;
+export declare type None = InstanceType<typeof none_impl_constructor> & NoneDistinctor;
 export declare type Option<T> = Some<T> | None;
 declare type OptionMatchBlock_<T, A> = {
     Some(value: T): A;
