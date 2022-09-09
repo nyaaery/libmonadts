@@ -74,7 +74,5 @@ exports.Result.try = function (f) {
     return (0, exports.Result)(f);
 };
 exports.Result.from_promise = async function (promise) {
-    return promise
-        .then(value => Ok(value))
-        .catch(err => Err(err));
+    return promise.then(Ok).catch(Err);
 };

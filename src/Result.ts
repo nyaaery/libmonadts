@@ -95,7 +95,5 @@ Result.try = function <T>(f: () => T): Result<T, unknown> {
 }
 
 Result.from_promise = async function <T>(promise: Promise<T>): Promise<Result<T, unknown>> {
-    return promise
-        .then(value => Ok(value))
-        .catch(err => Err(err));
+    return promise.then(Ok).catch(Err);
 }
