@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.None = exports.Some = void 0;
+exports.Option = exports.None = exports.Some = void 0;
 const option_impl_constructor = class Option {
     match(block) {
         if ("_" in block) {
@@ -57,3 +57,30 @@ function Some(value) {
 }
 exports.Some = Some;
 exports.None = Object.create(none_impl);
+exports.Option = (function (optional) {
+    if (optional === undefined) {
+        return exports.None;
+    }
+    else {
+        return Some(optional);
+    }
+});
+exports.Option.from_optional = function (optional) {
+    return (0, exports.Option)(optional);
+};
+exports.Option.from_nullable = function (nullable) {
+    if (nullable === null) {
+        return exports.None;
+    }
+    else {
+        return Some(nullable);
+    }
+};
+exports.Option.from_nullish = function (nullish) {
+    if (nullish === null || nullish === undefined) {
+        return exports.None;
+    }
+    else {
+        return Some(nullish);
+    }
+};

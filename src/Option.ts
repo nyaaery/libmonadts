@@ -71,3 +71,36 @@ export function Some<T>(value: T): Some<T> {
 }
 
 export const None: None = Object.create(none_impl);
+
+export const Option: {
+    <T>(optional: T | undefined): Option<T>,
+    from_optional<T>(optional: T | undefined): Option<T>,
+    from_nullable<T>(nullable: T | null): Option<T>,
+    from_nullish<T>(nullish: T | null | undefined): Option<T>
+} = (function <T>(optional: T | undefined): Option<T> {
+    if (optional === undefined) {
+        return None;
+    } else {
+        return Some(optional);
+    }
+}) as any;
+
+Option.from_optional = function <T>(optional: T | undefined): Option<T> {
+    return Option(optional);
+}
+
+Option.from_nullable = function <T>(nullable: T | null): Option<T> {
+    if (nullable === null) {
+        return None;
+    } else {
+        return Some(nullable);
+    }
+}
+
+Option.from_nullish = function <T>(nullish: T | null | undefined): Option<T> {
+    if (nullish === null || nullish === undefined) {
+        return None;
+    } else {
+        return Some(nullish);
+    }
+}

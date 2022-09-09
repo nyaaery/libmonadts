@@ -62,12 +62,19 @@ function Err(value) {
     return err;
 }
 exports.Err = Err;
-function Result(f) {
+exports.Result = (function (f) {
     try {
         return Ok(f());
     }
     catch (err) {
         return Err(err);
     }
-}
-exports.Result = Result;
+});
+exports.Result.try = function (f) {
+    return (0, exports.Result)(f);
+};
+exports.Result.from_promise = async function (promise) {
+    return promise
+        .then(value => Ok(value))
+        .catch(err => Err(err));
+};

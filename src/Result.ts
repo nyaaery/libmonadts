@@ -78,10 +78,24 @@ export function Err<E>(value: E): Err<E> {
     return err;
 }
 
-export function Result<T>(f: () => T): Result<T, unknown> {
+export const Result: {
+    <T>(f: () => T): Result<T, unknown>,
+    try<T>(f: () => T): Result<T, unknown>,
+    from_promise<T>(promise: Promise<T>): Promise<Result<T, unknown>>
+} = (function <T>(f: () => T): Result<T, unknown> {
     try {
         return Ok(f());
     } catch (err) {
         return Err(err);
     }
+}) as any;
+
+Result.try = function <T>(f: () => T): Result<T, unknown> {
+    return Result(f);
+}
+
+Result.from_promise = async function <T>(promise: Promise<T>): Promise<Result<T, unknown>> {
+    return promise
+        .then(value => Ok(value))
+        .catch(err => Err(err));
 }

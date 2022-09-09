@@ -33,5 +33,9 @@ declare const err_impl_constructor: {
 };
 export declare function Ok<T>(value: T): Ok<T>;
 export declare function Err<E>(value: E): Err<E>;
-export declare function Result<T>(f: () => T): Result<T, unknown>;
+export declare const Result: {
+    <T>(f: () => T): Result<T, unknown>;
+    try<T>(f: () => T): Result<T, unknown>;
+    from_promise<T>(promise: Promise<T>): Promise<Result<T, unknown>>;
+};
 export {};

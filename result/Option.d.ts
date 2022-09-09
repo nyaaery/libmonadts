@@ -40,4 +40,10 @@ declare const none_impl_constructor: {
 };
 export declare function Some<T>(value: T): Some<T>;
 export declare const None: None;
+export declare const Option: {
+    <T>(optional: T | undefined): Option<T>;
+    from_optional<T>(optional: T | undefined): Option<T>;
+    from_nullable<T>(nullable: T | null): Option<T>;
+    from_nullish<T>(nullish: T | null | undefined): Option<T>;
+};
 export {};
