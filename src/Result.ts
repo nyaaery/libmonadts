@@ -1,8 +1,10 @@
-export type Ok<T> = InstanceType<typeof ok_impl_constructor> & {
+import { ConstructorReturnType } from "./util";
+
+export type Ok<T> = ConstructorReturnType<typeof ok_impl_constructor> & {
     value: T
 }
 
-export type Err<E> = InstanceType<typeof err_impl_constructor> & {
+export type Err<E> = ConstructorReturnType<typeof err_impl_constructor> & {
     value: E
 }
 
