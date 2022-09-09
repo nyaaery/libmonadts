@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Option = exports.None = exports.Some = void 0;
+var NoneDistinctor;
+(function (NoneDistinctor) {
+    NoneDistinctor[NoneDistinctor["_"] = 0] = "_";
+})(NoneDistinctor || (NoneDistinctor = {}));
 const option_impl_constructor = class Option {
     match(block) {
         if ("_" in block) {

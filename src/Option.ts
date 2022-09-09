@@ -1,10 +1,13 @@
-import { ConstructorReturnType } from "./util";
-
-export type Some<T> = ConstructorReturnType<typeof some_impl_constructor> & {
+export type Some<T> = InstanceType<typeof some_impl_constructor> & {
     value: T
 }
 
-export type None = ConstructorReturnType<typeof none_impl_constructor>;
+// None must be an opaque type.
+// Otherwise, the TypeScript transpiler will equate it with the none_impl_constructor class.
+// This appears to make the TypeScript transpiler will replace the type with any in the generated declaration files.
+// This breaks the Option#None type guard and gives it the return type signature: this is any.
+enum NoneDistinctor { _ }
+export type None = InstanceType<typeof none_impl_constructor> & NoneDistinctor;
 
 export type Option<T> = Some<T> | None;
 
