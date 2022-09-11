@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Result = exports.Err = exports.Ok = void 0;
+var OkDistinctor;
+(function (OkDistinctor) {
+    OkDistinctor[OkDistinctor["_"] = 0] = "_";
+})(OkDistinctor || (OkDistinctor = {}));
+var ErrDistinctor;
+(function (ErrDistinctor) {
+    ErrDistinctor[ErrDistinctor["_"] = 0] = "_";
+})(ErrDistinctor || (ErrDistinctor = {}));
 const result_impl_constructor = class Result {
     match(block) {
         if ("_" in block) {

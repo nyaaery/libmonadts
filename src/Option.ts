@@ -1,12 +1,8 @@
+enum SomeDistinctor { _ }
 export type Some<T> = InstanceType<typeof some_impl_constructor> & {
     value: T
-}
+} & SomeDistinctor;
 
-// None must be an opaque type.
-// Otherwise, TypeScript treats None as identical to the none_impl_constructor class.
-// Which appears to result in the Option#None return type signatire being replace with (this is any) in the declaration files.
-// (Presumably because of infinite recursion.)
-// This breaks the type guard.
 enum NoneDistinctor { _ }
 export type None = InstanceType<typeof none_impl_constructor> & NoneDistinctor;
 

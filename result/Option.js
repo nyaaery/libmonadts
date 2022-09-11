@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Option = exports.None = exports.Some = void 0;
-// None must be an opaque type.
-// Otherwise, TypeScript treats None as identical to the none_impl_constructor class.
-// Which appears to result in the Option#None return type signatire being replace with (this is any) in the declaration files.
-// (Presumably because of infinite recursion.)
-// This breaks the type guard.
+var SomeDistinctor;
+(function (SomeDistinctor) {
+    SomeDistinctor[SomeDistinctor["_"] = 0] = "_";
+})(SomeDistinctor || (SomeDistinctor = {}));
 var NoneDistinctor;
 (function (NoneDistinctor) {
     NoneDistinctor[NoneDistinctor["_"] = 0] = "_";

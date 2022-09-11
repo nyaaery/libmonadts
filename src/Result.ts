@@ -1,10 +1,12 @@
+enum OkDistinctor { _ }
 export type Ok<T> = InstanceType<typeof ok_impl_constructor> & {
     value: T
-}
+} & OkDistinctor;
 
+enum ErrDistinctor { _ }
 export type Err<E> = InstanceType<typeof err_impl_constructor> & {
     value: E
-}
+} & ErrDistinctor;
 
 export type Result<T, E> = Ok<T> | Err<E>;
 

@@ -1,6 +1,9 @@
+declare enum SomeDistinctor {
+    _ = 0
+}
 export declare type Some<T> = InstanceType<typeof some_impl_constructor> & {
     value: T;
-};
+} & SomeDistinctor;
 declare enum NoneDistinctor {
     _ = 0
 }

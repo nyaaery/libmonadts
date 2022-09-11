@@ -1,9 +1,15 @@
+declare enum OkDistinctor {
+    _ = 0
+}
 export declare type Ok<T> = InstanceType<typeof ok_impl_constructor> & {
     value: T;
-};
+} & OkDistinctor;
+declare enum ErrDistinctor {
+    _ = 0
+}
 export declare type Err<E> = InstanceType<typeof err_impl_constructor> & {
     value: E;
-};
+} & ErrDistinctor;
 export declare type Result<T, E> = Ok<T> | Err<E>;
 declare type ResultMatchBlock_<T, E, A> = {
     Ok(value: T): A;
