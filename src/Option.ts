@@ -14,7 +14,7 @@ type OptionMatchBlock<T, A> = OptionMatchBlock_<T, A> | (Partial<OptionMatchBloc
 
 type _Option<T> = Option<T>;
 const option_impl_constructor = class Option {
-    match<T, A, X extends A | Promise<A>>(this: _Option<T>, block: OptionMatchBlock<T, X>): X {
+    match<X extends A | Promise<A>, T, A>(this: _Option<T>, block: OptionMatchBlock<T, X>): X {
         if ("_" in block) {
             if (block.Some !== undefined && this.Some()) {
                 return block.Some(this.value);
@@ -32,9 +32,17 @@ const option_impl_constructor = class Option {
         }
     }
 
-    bind<T, A, X extends _Option<A> | Promise<_Option<A>>>(this: _Option<T>, f: (value: T) => X): X | None {
+    bind<X extends _Option<A> | Promise<_Option<A>>, T, A>(this: _Option<T>, f: (value: T) => X): X | None {
         if (this.Some()) {
             return f(this.value);
+        } else {
+            return this;
+        }
+    }
+
+    bind_none<X extends _Option<A> | Promise<_Option<A>>, T, A>(this: _Option<T>, f: () => X): X | Some<T> {
+        if (this.None()) {
+            return f();
         } else {
             return this;
         }

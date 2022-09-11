@@ -1,3 +1,4 @@
+import { Option } from "./Option";
 declare enum OkDistinctor {
     _ = 0
 }
@@ -24,8 +25,11 @@ declare const ok_impl_constructor: {
     new (): {
         Ok<T, E>(this: Result<T, E>): this is _Ok<T>;
         Err<T_1, E_1>(this: Result<T_1, E_1>): this is Err<E_1>;
-        match<T_2, E_2, A, X extends A | Promise<A>>(this: _Result<T_2, E_2>, block: ResultMatchBlock<T_2, E_2, X>): X;
-        bind<T_3, E_3, A_1, B, X_1 extends _Result<A_1, B> | Promise<_Result<A_1, B>>>(this: _Result<T_3, E_3>, f: (value: T_3) => X_1): X_1 | Err<E_3>;
+        match<X extends A | Promise<A>, T_2, E_2, A>(this: _Result<T_2, E_2>, block: ResultMatchBlock<T_2, E_2, X>): X;
+        bind<X_1 extends _Result<A_1, B> | Promise<_Result<A_1, B>>, T_3, E_3, A_1, B>(this: _Result<T_3, E_3>, f: (value: T_3) => X_1): X_1 | Err<E_3>;
+        bind_err<X_2 extends _Result<A_2, B_1> | Promise<_Result<A_2, B_1>>, T_4, E_4, A_2, B_1>(this: _Result<T_4, E_4>, f: (err: E_4) => X_2): X_2 | Ok<T_4>;
+        ok<T_5, E_5>(this: _Result<T_5, E_5>): Option<T_5>;
+        err<T_6, E_6>(this: _Result<T_6, E_6>): Option<E_6>;
     };
 };
 declare type _Err<T> = Err<T>;
@@ -33,8 +37,11 @@ declare const err_impl_constructor: {
     new (): {
         Ok<T, E>(this: Result<T, E>): this is Ok<T>;
         Err<T_1, E_1>(this: Result<T_1, E_1>): this is _Err<E_1>;
-        match<T_2, E_2, A, X extends A | Promise<A>>(this: _Result<T_2, E_2>, block: ResultMatchBlock<T_2, E_2, X>): X;
-        bind<T_3, E_3, A_1, B, X_1 extends _Result<A_1, B> | Promise<_Result<A_1, B>>>(this: _Result<T_3, E_3>, f: (value: T_3) => X_1): X_1 | Err<E_3>;
+        match<X extends A | Promise<A>, T_2, E_2, A>(this: _Result<T_2, E_2>, block: ResultMatchBlock<T_2, E_2, X>): X;
+        bind<X_1 extends _Result<A_1, B> | Promise<_Result<A_1, B>>, T_3, E_3, A_1, B>(this: _Result<T_3, E_3>, f: (value: T_3) => X_1): X_1 | Err<E_3>;
+        bind_err<X_2 extends _Result<A_2, B_1> | Promise<_Result<A_2, B_1>>, T_4, E_4, A_2, B_1>(this: _Result<T_4, E_4>, f: (err: E_4) => X_2): X_2 | Ok<T_4>;
+        ok<T_5, E_5>(this: _Result<T_5, E_5>): Option<T_5>;
+        err<T_6, E_6>(this: _Result<T_6, E_6>): Option<E_6>;
     };
 };
 export declare function Ok<T>(value: T): Ok<T>;

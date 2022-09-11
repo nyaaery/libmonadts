@@ -39,6 +39,14 @@ const option_impl_constructor = class Option {
             return this;
         }
     }
+    bind_none(f) {
+        if (this.None()) {
+            return f();
+        }
+        else {
+            return this;
+        }
+    }
 };
 const some_impl_constructor = class Some extends option_impl_constructor {
     Some() {

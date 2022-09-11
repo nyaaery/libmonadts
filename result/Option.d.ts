@@ -22,16 +22,18 @@ declare const some_impl_constructor: {
     new (): {
         Some<T>(this: Option<T>): this is _Some<T>;
         None<T_1>(this: Option<T_1>): this is None;
-        match<T_2, A, X extends A | Promise<A>>(this: _Option<T_2>, block: OptionMatchBlock<T_2, X>): X;
-        bind<T_3, A_1, X_1 extends _Option<A_1> | Promise<_Option<A_1>>>(this: _Option<T_3>, f: (value: T_3) => X_1): None | X_1;
+        match<X extends A | Promise<A>, T_2, A>(this: _Option<T_2>, block: OptionMatchBlock<T_2, X>): X;
+        bind<X_1 extends _Option<A_1> | Promise<_Option<A_1>>, T_3, A_1>(this: _Option<T_3>, f: (value: T_3) => X_1): None | X_1;
+        bind_none<X_2 extends _Option<A_2> | Promise<_Option<A_2>>, T_4, A_2>(this: _Option<T_4>, f: () => X_2): X_2 | Some<T_4>;
     };
 };
 declare const none_impl_constructor: {
     new (): {
         Some<T>(this: Option<T>): this is Some<T>;
         None<T_1>(this: Option<T_1>): this is None;
-        match<T_2, A, X extends A | Promise<A>>(this: _Option<T_2>, block: OptionMatchBlock<T_2, X>): X;
-        bind<T_3, A_1, X_1 extends _Option<A_1> | Promise<_Option<A_1>>>(this: _Option<T_3>, f: (value: T_3) => X_1): None | X_1;
+        match<X extends A | Promise<A>, T_2, A>(this: _Option<T_2>, block: OptionMatchBlock<T_2, X>): X;
+        bind<X_1 extends _Option<A_1> | Promise<_Option<A_1>>, T_3, A_1>(this: _Option<T_3>, f: (value: T_3) => X_1): None | X_1;
+        bind_none<X_2 extends _Option<A_2> | Promise<_Option<A_2>>, T_4, A_2>(this: _Option<T_4>, f: () => X_2): X_2 | Some<T_4>;
     };
 };
 export declare function Some<T>(value: T): Some<T>;

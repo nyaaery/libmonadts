@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Result = exports.Err = exports.Ok = void 0;
+const Option_1 = require("./Option");
 var OkDistinctor;
 (function (OkDistinctor) {
     OkDistinctor[OkDistinctor["_"] = 0] = "_";
@@ -37,6 +38,30 @@ const result_impl_constructor = class Result {
         }
         else {
             return this;
+        }
+    }
+    bind_err(f) {
+        if (this.Err()) {
+            return f(this.value);
+        }
+        else {
+            return this;
+        }
+    }
+    ok() {
+        if (this.Ok()) {
+            return (0, Option_1.Some)(this.value);
+        }
+        else {
+            return Option_1.None;
+        }
+    }
+    err() {
+        if (this.Err()) {
+            return (0, Option_1.Some)(this.value);
+        }
+        else {
+            return Option_1.None;
         }
     }
 };

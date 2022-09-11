@@ -1,3 +1,5 @@
+import { Option, Some, None } from "./Option";
+
 enum OkDistinctor { _ }
 export type Ok<T> = InstanceType<typeof ok_impl_constructor> & {
     value: T
@@ -16,7 +18,7 @@ type ResultMatchBlock<T, E, A> = ResultMatchBlock_<T, E, A> | (Partial<ResultMat
 
 type _Result<T, E> = Result<T, E>;
 const result_impl_constructor = class Result {
-    match<T, E, A, X extends A | Promise<A>>(this: _Result<T, E>, block: ResultMatchBlock<T, E, X>): X {
+    match<X extends A | Promise<A>, T, E, A>(this: _Result<T, E>, block: ResultMatchBlock<T, E, X>): X {
         if ("_" in block) {
             if (block.Ok !== undefined && this.Ok()) {
                 return block.Ok(this.value);
@@ -34,11 +36,35 @@ const result_impl_constructor = class Result {
         }
     }
 
-    bind<T, E, A, B, X extends _Result<A, B> | Promise<_Result<A, B>>>(this: _Result<T, E>, f: (value: T) => X): X | Err<E> {
+    bind<X extends _Result<A, B> | Promise<_Result<A, B>>, T, E, A, B>(this: _Result<T, E>, f: (value: T) => X): X | Err<E> {
         if (this.Ok()) {
             return f(this.value);
         } else {
             return this;
+        }
+    }
+
+    bind_err<X extends _Result<A, B> | Promise<_Result<A, B>>, T, E, A, B>(this: _Result<T, E>, f: (err: E) => X): X | Ok<T> {
+        if (this.Err()) {
+            return f(this.value);
+        } else {
+            return this;
+        }
+    }
+
+    ok<T, E>(this: _Result<T, E>): Option<T> {
+        if (this.Ok()) {
+            return Some(this.value);
+        } else {
+            return None;
+        }
+    }
+
+    err<T, E>(this: _Result<T, E>): Option<E> {
+        if (this.Err()) {
+            return Some(this.value);
+        } else {
+            return None;
         }
     }
 }
