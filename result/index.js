@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Err = exports.Ok = exports.Result = exports.None = exports.Some = exports.Option = void 0;
+exports.Right = exports.Left = exports.Err = exports.Ok = exports.Result = exports.None = exports.Some = exports.Option = void 0;
 var Option_1 = require("./Option");
 Object.defineProperty(exports, "Option", { enumerable: true, get: function () { return Option_1.Option; } });
 Object.defineProperty(exports, "Some", { enumerable: true, get: function () { return Option_1.Some; } });
@@ -9,3 +9,6 @@ var Result_1 = require("./Result");
 Object.defineProperty(exports, "Result", { enumerable: true, get: function () { return Result_1.Result; } });
 Object.defineProperty(exports, "Ok", { enumerable: true, get: function () { return Result_1.Ok; } });
 Object.defineProperty(exports, "Err", { enumerable: true, get: function () { return Result_1.Err; } });
+var Either_1 = require("./Either");
+Object.defineProperty(exports, "Left", { enumerable: true, get: function () { return Either_1.Left; } });
+Object.defineProperty(exports, "Right", { enumerable: true, get: function () { return Either_1.Right; } });
